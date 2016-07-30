@@ -1,0 +1,47 @@
+install.packages("data.table")
+library(data.table)
+install.packages("ff")
+setwd('C:/Users/sxs140732/project/dataset/')
+getwd()
+filenames<-list.files("C:/Users/sxs140732/project/dataset/",patter="*.csv",full.names=TRUE)
+df1<-fread(input='yellow_tripdata_2015-01.csv')
+install.packages("maps")
+library(maps)
+library(ggplot2)
+all_states<-map_data('state')
+colnames(df1)
+df1$pickup_latitude<-round(df1$pickup_latitude,2)
+df1$pickup_longitude<-round(df1$pickup_longitude,2)
+View(head(df1,n=6))
+gc()
+install.packages("ggplot2")
+class(df1)
+ny<-subset(all_states,subregion %in% c("manhattan"))
+print(ny)
+colnames(ny)
+ny$long<-round(ny$long,2)
+ny$lat<-round(ny$lat,2)
+ny
+head(df1,n=6)
+
+install.packages("sqldf")
+library(sqldf)
+sf<-sqldf("select distinct long,lat from ny order by long,lat")
+range(ny$long)
+range(ny$lat)
+
+df1[,manhattan:=(pickup_longitude>=-74.03 && pickup_latitude<=-73.93)&&(pickup_latitude>=40.71&&pickup_latitude<=40.84)]
+colnames(df1)
+length(df1$manhattan)
+unique(df1$manhattan)
+
+df2<-sqldf("select * from df1 where pickup_longitude between -74.03 and -73.93 and pickup_latitude between 40.71 and 40.84")
+warnings()
+df2$manhattan=NULL
+colnames(df2)
+df3<-sqldf("select sum(fare_amount),sum(tip_amount),sum(trip_distance),sum(total_amount),pickup_longitude,pickup_latitude from df2 group by pickup_longitude,pickup_latitude")
+View(df3)
+colnames(df2)
+write.csv(df3,'jan_2015_consolidated.csv')
+
+

@@ -1,0 +1,18 @@
+{
+    "contents" : "\n# Initial Load\ndata1 <- read.csv(\"MemberEngagementnoemail.csv\", header = TRUE, sep = \",\", stringsAsFactors = FALSE)\nstr(data1)\n\nncol()\n\n# Converting data types\ndata1$YEAR <- as.character(data1$YEAR)\ndata1$CustomerId <- as.integer(data1$CustomerId)\n\ndata1$MemberType <- as.factor(data1$MemberType)",
+    "created" : 1445968711581.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1954092303",
+    "id" : "10CDE3E9",
+    "lastKnownWriteTime" : 1446064291,
+    "path" : "C:/Users/priyanka.palkar/Desktop/Fall 2015/CapstoneProject/RProj/ATD_Project.R",
+    "project_path" : "ATD_Project.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
